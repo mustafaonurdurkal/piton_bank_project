@@ -1,5 +1,0 @@
-C:/Users/Onur/Desktop/piton/TcpServer/out/build/x64-debug/CMakeFiles/edit_cache.dir
-C:/Users/Onur/Desktop/piton/TcpServer/out/build/x64-debug/CMakeFiles/rebuild_cache.dir
-C:/Users/Onur/Desktop/piton/TcpServer/out/build/x64-debug/TcpServer/CMakeFiles/TcpServer.dir
-C:/Users/Onur/Desktop/piton/TcpServer/out/build/x64-debug/TcpServer/CMakeFiles/edit_cache.dir
-C:/Users/Onur/Desktop/piton/TcpServer/out/build/x64-debug/TcpServer/CMakeFiles/rebuild_cache.dir
