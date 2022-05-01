@@ -9,50 +9,26 @@ using namespace std;
 
 #define PORT 9909
 int clients[5];
-bool girisyapildi = false;
-bool bakiyeyollandi = false;
-bool secimyapildi = false;
-bool receiverVerify = false;
-bool paraYatirma = false;
-bool paraCekme = false;
-bool paraTransfer = false;
 
-string name;
-string surname;
-string password;
-string balance;
-string receiverName;
-string receiverSurname;
-string receiverCardnumber;
 
-int receiveCount = 0;
-int receiveCount2 = 0;
 
 Card card;
 ServiceOperations serviceOperation ;
 char buffer[256 + 1] = { 0, };
 
-void AnamenuyeYonlendir() {
-	bakiyeyollandi = false;
-	secimyapildi = false;
-}
 void BakiyeBilgisiYolla(int clientSocket) {
 
-	serviceOperation.readCards();
-	for (int i = 0; i < sizeof(serviceOperation.cards); i++)
-	{
-		if (serviceOperation.cards[i].id == serviceOperation.loginCustomer.cardId) {
-			card = serviceOperation.cards[i];
-			char* cstr = &card.cardBalance[0];
-			send(clientSocket, cstr, 256, 0);
-			bakiyeyollandi = true;
-			break;
-		}
-
-	}
+	
 }
 
 void Connection::ProcessNewMessage(int clientSocket) {
+	int k = 0;
+	for (k = 0; k < sizeof(clientVector); k++)
+	{
+		if (clientVector[k].socket == clientSocket) {
+			 break;
+		}
+	}
 	cout << endl<<"Soket " << clientSocket << "den gelen yeni mesaj isleniyor";
 
 	int nRet = recv(clientSocket, buffer, 256, 0);
@@ -61,11 +37,11 @@ void Connection::ProcessNewMessage(int clientSocket) {
 	if (nRet < 0) {													
 		cout<<endl << "Biseyler ters gitti baglanti kesiliyor.";   
 		closesocket(clientSocket);
-		girisyapildi = false;
-		bakiyeyollandi = false;
-		secimyapildi = false;
-		receiveCount = 0;
-		receiveCount2 = 0;
+		clientVector[k].girisyapildi = false;
+		clientVector[k].bakiyeyollandi = false;
+		clientVector[k].secimyapildi = false;
+		clientVector[k].receiveCount = 0;
+		clientVector[k].receiveCount2 = 0;
 		for (int index = 0; index < 5; index++)
 		{
 			if (clients[index] == clientSocket) {
@@ -77,30 +53,32 @@ void Connection::ProcessNewMessage(int clientSocket) {
 
 	//Kullanici mesaj yollamaya devam ediyor
 	else {															
-		receiveCount++;
+		clientVector[k].receiveCount++;
 		cout << endl << "Gelen Mesaj: " << buffer<<endl;
 
 		//Kullanici giris yapmadi
-		if (!girisyapildi) {										
-			if (receiveCount == 1) {
-				name = buffer;
+		if (!clientVector[k].girisyapildi) {
+			if (clientVector[k].receiveCount == 1) {
+				clientVector[k].name = buffer;
 			}
-			else if (receiveCount == 2) {
-				surname = buffer;
+			else if (clientVector[k].receiveCount == 2) {
+				clientVector[k].surname = buffer;
 
 			}
-			else if (receiveCount == 3) {
-				password = buffer;
+			else if (clientVector[k].receiveCount == 3) {
+				clientVector[k].password = buffer;
 
 				serviceOperation.readCustomers();
-				girisyapildi = serviceOperation.checkLogin(name, surname, password);
-				if (girisyapildi) {
+				cout << "\n\n\t\t denemeeeeee000";
+				clientVector[k].girisyapildi = serviceOperation.checkLogin(clientVector[k].name, clientVector[k].surname, clientVector[k].password);
+				cout << "\n\n\t\t denemeeeeee000";
+				if (clientVector[k].girisyapildi) {
 					send(clientSocket, "1", 2, 0);	
 				}
 				else {
 					send(clientSocket, "0", 2, 0);
 				}
-				receiveCount = 0;
+				clientVector[k].receiveCount = 0;
 				
 			}
 
@@ -110,33 +88,53 @@ void Connection::ProcessNewMessage(int clientSocket) {
 		else {					
 
 			//Kullaniciya bakiye bilgisi yollaniyor...
-			if (!bakiyeyollandi) {			
-				BakiyeBilgisiYolla(clientSocket);
+			if (!clientVector[k].bakiyeyollandi) {
+				serviceOperation.readCards();
+				for (int i = 0; i < sizeof(serviceOperation.cards); i++)
+				{
+					cout << "\n\n\t\t "<< serviceOperation.cards[i].id<<"       "<< serviceOperation.loginCustomer.cardId;
+					if (serviceOperation.cards[i].id == serviceOperation.loginCustomer.cardId) {
+						
+						cout << "girdim1";
+						card = serviceOperation.cards[i];
+						cout << "girdim2";
+						char* cstr = &card.cardBalance[0];
+						cout << "girdim3";
+						send(clientSocket, cstr, 256, 0);
+						cout << "girdim4";
+						clientVector[k].bakiyeyollandi = true;
+						cout << "girdim5";
+						break;
+						
+					}
+
+				}
 			}
 
 			//Kullanici secim bilgisi belirleniyor...
-			else if (!secimyapildi) {
-				paraYatirma = (buffer[0] == 'y'); //secim para yatirmak ise
-				paraCekme = (buffer[0] == 'c');	//secim para cekmek ise
-				paraTransfer = (buffer[0] == 't');//secim para transfer ise
-				secimyapildi = true;
+			else if (!clientVector[k].secimyapildi) {
+				clientVector[k].paraYatirma = (buffer[0] == 'y'); //secim para yatirmak ise
+				clientVector[k].paraCekme = (buffer[0] == 'c');	//secim para cekmek ise
+				clientVector[k].paraTransfer = (buffer[0] == 't');//secim para transfer ise
+				clientVector[k].secimyapildi = true;
 			}
 
 			//Kullanici secimine gore operasyonlar yapiliyor
 			else{												
 				
 				//Secim para yatirma ise
-				if (paraYatirma) {
+				if (clientVector[k].paraYatirma) {
 					float income = stof(string(buffer));
 					serviceOperation.updateAmount(card, income);
 					char* cstr = &card.cardBalance[0];
 					send(clientSocket, cstr, 256, 0);
-					paraYatirma = false;
-					AnamenuyeYonlendir();
+					clientVector[k].paraYatirma = false;
+					clientVector[k].bakiyeyollandi = false;
+					clientVector[k].secimyapildi = false;
 				}
 
 				//Secim para cekme ise
-				else if (paraCekme) {
+				else if (clientVector[k].paraCekme) {
 					float income = stof(string(buffer)); 
 					float cardBalance = stof(string(card.cardBalance));
 					if (cardBalance < income) {
@@ -146,57 +144,58 @@ void Connection::ProcessNewMessage(int clientSocket) {
 						serviceOperation.updateAmount(card, income*(-1));
 						char* cstr = &card.cardBalance[0];
 						send(clientSocket, cstr, 256, 0);
-						paraCekme = false;
-						AnamenuyeYonlendir();
+						clientVector[k].paraCekme = false;
+						clientVector[k].bakiyeyollandi = false;
+						clientVector[k].secimyapildi = false;
 					}	
 				}
 
 				//Secim para transferi ise
-				else if (paraTransfer) {
+				else if (clientVector[k].paraTransfer) {
 
-					if (receiveCount2 == 0) {
-						receiverName = buffer;
-						receiveCount2++;
+					if (clientVector[k].receiveCount2 == 0) {
+						clientVector[k].receiverName = buffer;
+						clientVector[k].receiveCount2++;
 					}
-					else if (receiveCount2 == 1) {
-						receiverSurname = buffer;
-						receiveCount2++;
+					else if (clientVector[k].receiveCount2 == 1) {
+						clientVector[k].receiverSurname = buffer;
+						clientVector[k].receiveCount2++;
 					}
-					else if (receiveCount2 == 2) {
-						receiverCardnumber = buffer;
+					else if (clientVector[k].receiveCount2 == 2) {
+						clientVector[k].receiverCardnumber = buffer;
 						serviceOperation.readCards();
-						receiverVerify = serviceOperation.checkReceiver(receiverName, receiverSurname, receiverCardnumber);
-						receiveCount2++;
+						clientVector[k].receiverVerify = serviceOperation.checkReceiver(clientVector[k].receiverName, clientVector[k].receiverSurname, clientVector[k].receiverCardnumber);
+						clientVector[k].receiveCount2++;
 					}
-				    if (receiveCount2 == 3) {
-						if (receiverVerify) {
+				    if (clientVector[k].receiveCount2 == 3) {
+						if (clientVector[k].receiverVerify) {
 							send(clientSocket, "1", 2, 0);
-							receiveCount2++;
+							clientVector[k].receiveCount2++;
 						}
 						else {
 							send(clientSocket, "0", 2, 0);
-							receiveCount2 = 0;
+							clientVector[k].receiveCount2 = 0;
 						}	
 						
 					}
-					if (receiveCount2 == 4) {
+					if (clientVector[k].receiveCount2 == 4) {
 						serviceOperation.findCustomerCard(serviceOperation.loginCustomer);
 						//Ayni banka ise
 						if (serviceOperation.loginCustomer.card.bankid == serviceOperation.receiverCard.bankid) {
-							receiveCount2++;
+							clientVector[k].receiveCount2++;
 						}
 						//Farkli banka ise
 						else {
-							receiveCount2+=2;
+							clientVector[k].receiveCount2+=2;
 						}
 					}
 					//Ayni Banka transfer islemi
-					else if (receiveCount2 == 5) {
+					else if (clientVector[k].receiveCount2 == 5) {
 						float income = stof(string(buffer));
 						float cardBalance = stof(string(card.cardBalance));
 						if (cardBalance < income) {
 							send(clientSocket, "Y", 2, 0);
-							receiveCount2 = 0;
+							clientVector[k].receiveCount2 = 0;
 						}
 						else {
 							serviceOperation.updateAmount(card, income * (-1));
@@ -206,12 +205,12 @@ void Connection::ProcessNewMessage(int clientSocket) {
 						}
 					}
 					//Farkli Banka transfer islemi
-					else if (receiveCount2 == 6) {
+					else if (clientVector[k].receiveCount2 == 6) {
 						float income = stof(string(buffer));
 						float cardBalance = stof(string(card.cardBalance));
 						if (cardBalance < income) {
 							send(clientSocket, "Y", 2, 0);
-							receiveCount2 = 0;
+							clientVector[k].receiveCount2 = 0;
 						}
 						else {
 							serviceOperation.readBanks();
@@ -242,6 +241,9 @@ void Connection::ProcessTheNewRequest() {
 			{
 				if (clients[index] == 0) {
 					clients[index] = clientSocket;
+					Client client;
+					client.socket = clientSocket;
+					clientVector.push_back(client);
 					//cout << clientSocket;
 					//cout<<endl << clients[index];
 					//send(clientSocket, "Baglanti server tarafindan saglandi.", 37, 0);
@@ -258,7 +260,6 @@ void Connection::ProcessTheNewRequest() {
 		for (int index = 0; index < 5; index++)
 		{
 			if (FD_ISSET(clients[index], &fr)) {
-
 				ProcessNewMessage(clients[index]);
 			}
 		}

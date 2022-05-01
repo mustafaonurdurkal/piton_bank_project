@@ -19,5 +19,5 @@ public:
 	void selectFunction();
 	void ProcessTheNewRequest();
 	void ProcessNewMessage(int clientSocket);
-	vector <Client> client;
+	vector <Client> clientVector;
 };

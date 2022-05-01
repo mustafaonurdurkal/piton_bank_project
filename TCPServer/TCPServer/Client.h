@@ -10,6 +10,25 @@ class Client {
 
 public:
 	int socket;
-	  Client();
+	int receiveCount;
+	int receiveCount2;
+
+	bool girisyapildi;
+	bool bakiyeyollandi ;
+	bool secimyapildi;
+	bool receiverVerify ;
+	bool paraYatirma ;
+	bool paraCekme ;
+	bool paraTransfer ;
+
+	string name;
+	string surname;
+	string password;
+	string balance;
+	string receiverName;
+	string receiverSurname;
+	string receiverCardnumber;
+
+	Client();
 
 };
