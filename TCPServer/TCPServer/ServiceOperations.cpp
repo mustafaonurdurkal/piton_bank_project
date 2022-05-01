@@ -1,10 +1,12 @@
-#include "ServiceOperations.h"
+#pragma once
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <sstream>
+
 #include "Customer.h";
 #include "Card.h";
+#include "ServiceOperations.h"
 
 using namespace std;
 
@@ -42,7 +44,7 @@ void ServiceOperations::readCustomers()
                 else { characterCounter++; };
             }
             customers.push_back(customer);
-            cout << row << endl;
+            //cout << row << endl;
         }
 
         readFile.close();
@@ -58,6 +60,7 @@ void ServiceOperations::readCards()
 
     if (readFile.is_open()) {
 
+        cards.clear();
         while (getline(readFile, row)) {
             int characterCounter = 0;
 
@@ -79,26 +82,27 @@ void ServiceOperations::readCards()
                         card.cardCustomerName += row[i];
                     }
                     if (characterCounter == 4) {
-                        card.expirationDate += row[i];
+                        card.cardCustomerSurname += row[i];
                     }
                     if (characterCounter == 5) {
-                        card.securityCode += row[i];
+                        card.expirationDate += row[i];
                     }
                     if (characterCounter == 6) {
+                        card.securityCode += row[i];
+                    }
+                    if (characterCounter == 7) {
                         card.cardBalance += row[i];
                     }
                 }
                 else { characterCounter++; };
             }
             cards.push_back(card);
-            cout << row << endl;
         }
 
         readFile.close();
     }
 
 }
-
 void ServiceOperations::readBanks()
 {
 
@@ -122,40 +126,35 @@ void ServiceOperations::readBanks()
                     if (characterCounter == 1) {
                         bank.id += row[i];
                     }
+                    if (characterCounter == 2) {
+                        bank.fee += row[i];
+                    }
                   
                 }
                 else { characterCounter++; };
             }
             banks.push_back(bank);
-            cout << row << endl;
+           // cout << row << endl;
         }
 
         readFile.close();
     }
 
 }
-
-void ServiceOperations::updateAmount(Card card, float changeBalance)
+void ServiceOperations::updateAmount(Card &card, float changeBalance)
 {
-    float oldBalance = 0.00f;
+       float oldBalance = 0.00f;
         oldBalance= stof(card.cardBalance);
         float newBalance = 0.00f;
         newBalance= oldBalance + changeBalance;
-      
-
-        stringstream sstream;
-
         
     for (int i = 0; i < cards.size(); i++) {
 
         if (card.id == cards[i].id) {
-            sstream << newBalance;
-            cards[i].cardBalance = sstream.str();
-            cout << '\n';
-            cout << cards[i].cardBalance;
+            cards[i].cardBalance = to_string(newBalance);
+            card.cardBalance= to_string(newBalance);
         }
     }
-    ofstream{ "temp.txt" };
 
     ofstream writeOnFile;
     writeOnFile.open("temp.txt");
@@ -165,11 +164,11 @@ void ServiceOperations::updateAmount(Card card, float changeBalance)
         //if the last card element  so  no new line
         if (i == cards.size() - 1) {  
             str += cards[i].id + '*' + cards[i].cardNumber + '*' + cards[i].bankid + '*' + cards[i].cardCustomerName + '*'
-                + cards[i].expirationDate + '*' + cards[i].securityCode + '*' + cards[i].cardBalance ;
+                + cards[i].cardCustomerSurname + '*' + cards[i].expirationDate + '*' + cards[i].securityCode + '*' + cards[i].cardBalance ;
         }
         else {
             str += cards[i].id + '*' + cards[i].cardNumber + '*' + cards[i].bankid + '*' + cards[i].cardCustomerName + '*'
-                + cards[i].expirationDate + '*' + cards[i].securityCode + '*' + cards[i].cardBalance + '\n';
+                + cards[i].cardCustomerSurname + '*' + cards[i].expirationDate + '*' + cards[i].securityCode + '*' + cards[i].cardBalance + '\n';
         }
 
     }
@@ -179,6 +178,58 @@ void ServiceOperations::updateAmount(Card card, float changeBalance)
     rename("temp.txt", "card.txt");
 
     
+
+}
+bool ServiceOperations::checkLogin(string name, string surname,string password)
+{
+    readCustomers();
+    for (int i = 0; i < size(customers); i++)
+    {
+        if (name == customers[i].customerName && surname == customers[i].customerSurname && password == customers[i].customerPassword) {
+            loginCustomer = customers[i];
+            return true;
+        }
+    }
+
+
+    return false;
+}
+bool ServiceOperations::checkReceiver(string name, string surname, string cardNumber)
+{
+    readCards();
+    for (int i = 0; i < size(cards); i++)
+    {
+        if (name == cards[i].cardCustomerName && surname == cards[i].cardCustomerSurname && cardNumber == cards[i].cardNumber) {
+            receiverCard = cards[i];
+            return true;
+        }
+    }
+
+    return false;
+}
+void ServiceOperations::findCustomerCard(Customer &nCustomer)
+{
+    for (int i = 0; i < sizeof(cards); i++)
+    {
+        if (cards[i].id == nCustomer.cardId) {
+            nCustomer.card = cards[i];
+            break;
+        }
+    }
+}
+void ServiceOperations::findCardBank(Card &nCard)
+{
+    for (int i = 0; i < sizeof(banks); i++)
+    {
+
+        if (banks[i].id == nCard.bankid) {
+            nCard.bank = banks[i];
+            break;
+        }
+    }
+}
+ServiceOperations::ServiceOperations()
+{
 
 }
 

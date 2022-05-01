@@ -1,7 +1,15 @@
-﻿  TCPServer.cpp
-C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(4,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+﻿  Client.cpp
+  Connection.cpp
 C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(5,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
 C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(7,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\Connection.cpp(219,16): warning C4244: 'başlatılıyor': 'float' - 'int' dönüşümü; veri kaybı olabilir
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\Connection.cpp(237,20): warning C4244: 'başlatılıyor': 'SOCKET' - 'int' dönüşümü; veri kaybı olabilir
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\Connection.cpp(279,19): warning C4244: '=': 'SOCKET' - 'int' dönüşümü; veri kaybı olabilir
+  TCPServer.cpp
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(5,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(7,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
 C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\TCPServer.cpp(8,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
-C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\TCPServer.cpp(28,15): warning C4244: 'başlatılıyor': 'SOCKET' - 'int' dönüşümü; veri kaybı olabilir
+  Kod Üretiliyor...
   TCPServer.vcxproj -> C:\Users\Onur\Desktop\piton\TCPServer\x64\Debug\TCPServer.exe

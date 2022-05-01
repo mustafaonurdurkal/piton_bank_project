@@ -1,6 +1,4 @@
-#include <iostream>
-#include <string>
-#include "Customer.h"
+#include "Bank.h"
 
 Bank::Bank()
 {

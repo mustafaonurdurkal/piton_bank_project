@@ -1,0 +1,44 @@
+﻿  Bank.cpp
+  Card.cpp
+  Connection.cpp
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(4,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(5,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\Connection.cpp(81,20): warning C4244: 'başlatılıyor': 'SOCKET' - 'int' dönüşümü; veri kaybı olabilir
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\Connection.cpp(124,19): warning C4244: '=': 'SOCKET' - 'int' dönüşümü; veri kaybı olabilir
+  Customer.cpp
+  ServiceOperations.cpp
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(4,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(5,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(7,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(56,19): warning C4129: 'D': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(56,19): warning C4129: 'c': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(106,19): warning C4129: 'D': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(158,15): warning C4129: 'D': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(161,22): warning C4129: 'D': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(178,12): warning C4129: 'D': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(178,12): warning C4129: 'c': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(179,12): warning C4129: 'D': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(179,34): warning C4129: 'D': tanınmayan karakter kaçış sırası
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(179,34): warning C4129: 'c': tanınmayan karakter kaçış sırası
+  TCPServer.cpp
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(4,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(5,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\TCPServer.cpp(8,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_setsockopt
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_htons
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_recv
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_socket
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_send
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_WSAStartup
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_listen
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_select
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_closesocket
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_bind
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_accept
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __WSAFDIsSet
+Connection.obj : error LNK2001: çözümlenmemiş dış sembol __imp_WSACleanup
+C:\Users\Onur\Desktop\piton\TCPServer\x64\Release\TCPServer.exe : fatal error LNK1120: 13 çözümlenmemiş dışlar

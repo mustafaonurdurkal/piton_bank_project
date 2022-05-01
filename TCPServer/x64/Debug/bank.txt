@@ -1,0 +1,3 @@
+akbank*0001
+ziraatbank*0002
+garantibank*0003

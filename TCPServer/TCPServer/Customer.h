@@ -2,7 +2,10 @@
 #include <iostream>
 #include <string>
 #include "Card.h"
+
+
 using namespace std;
+
 
 class Customer {
 
@@ -11,6 +14,7 @@ public:	string id="";
 		string customerPassword="";
 	    string customerName="";
 		string cardId = "";
-		Customer(int receiveId);
+		Card card;
 		Customer();
+		
 };
