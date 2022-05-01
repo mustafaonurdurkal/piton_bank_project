@@ -15,12 +15,11 @@ public:  void readCustomers();													 // Read the customer text file and c
 		 void readCards();														//  Read the card text file and create cards objects in cards vector.
 		 void readBanks();														//  Read the bank text file and create banks objects in banks vector.
 		 void updateAmount(Card &card,float transferBalance);
-		 bool checkLogin(string name, string surname, string password);
+		 bool checkLogin(string name, string surname, string password, Customer &clientCustomer);
 		 bool checkReceiver(string name, string surname, string cardNumber);
 		 void findCustomerCard(Customer &nCustomer);
 		 void findCardBank(Card &nCard);
 		 ServiceOperations();                                                                                                                                                                             
-		 Customer loginCustomer;
 		 Card receiverCard;
 		 vector <Customer> customers;
 		 vector <Card> cards;

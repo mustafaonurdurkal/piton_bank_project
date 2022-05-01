@@ -13,4 +13,6 @@ Client::Client()
 	paraYatirma = false;
 	paraCekme = false;
 	paraTransfer = false;
+
+
 }

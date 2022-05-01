@@ -1,1 +1,21 @@
-﻿  TCPServer.vcxproj -> C:\Users\Onur\Desktop\piton\TCPServer\x64\Debug\TCPServer.exe
+﻿  Client.cpp
+  Connection.cpp
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(5,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(7,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\Connection.cpp(202,16): warning C4244: 'başlatılıyor': 'float' - 'int' dönüşümü; veri kaybı olabilir
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\Connection.cpp(220,20): warning C4244: 'başlatılıyor': 'SOCKET' - 'int' dönüşümü; veri kaybı olabilir
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\Connection.cpp(265,19): warning C4244: '=': 'SOCKET' - 'int' dönüşümü; veri kaybı olabilir
+  ServiceOperations.cpp
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(7,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.cpp(8,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(5,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(7,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+  TCPServer.cpp
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(5,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(6,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\ServiceOperations.h(7,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+C:\Users\Onur\Desktop\piton\TCPServer\TCPServer\TCPServer.cpp(8,10): warning C4067: ön işlemci yönergesinden sonra beklenmeyen belirteçler var - satır sonu bekleniyordu
+  Kod Üretiliyor...
+  TCPServer.vcxproj -> C:\Users\Onur\Desktop\piton\TCPServer\x64\Debug\TCPServer.exe

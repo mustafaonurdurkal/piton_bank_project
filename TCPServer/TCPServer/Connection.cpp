@@ -9,17 +9,9 @@ using namespace std;
 
 #define PORT 9909
 int clients[5];
-
-
-
-Card card;
 ServiceOperations serviceOperation ;
 char buffer[256 + 1] = { 0, };
 
-void BakiyeBilgisiYolla(int clientSocket) {
-
-	
-}
 
 void Connection::ProcessNewMessage(int clientSocket) {
 	int k = 0;
@@ -67,17 +59,14 @@ void Connection::ProcessNewMessage(int clientSocket) {
 			}
 			else if (clientVector[k].receiveCount == 3) {
 				clientVector[k].password = buffer;
-
 				serviceOperation.readCustomers();
-				cout << "\n\n\t\t denemeeeeee000";
-				clientVector[k].girisyapildi = serviceOperation.checkLogin(clientVector[k].name, clientVector[k].surname, clientVector[k].password);
-				cout << "\n\n\t\t denemeeeeee000";
+				clientVector[k].girisyapildi = serviceOperation.checkLogin(clientVector[k].name, clientVector[k].surname, clientVector[k].password,clientVector[k].customer);
 				if (clientVector[k].girisyapildi) {
 					send(clientSocket, "1", 2, 0);	
 				}
 				else {
 					send(clientSocket, "0", 2, 0);
-				}
+				}   
 				clientVector[k].receiveCount = 0;
 				
 			}
@@ -92,18 +81,13 @@ void Connection::ProcessNewMessage(int clientSocket) {
 				serviceOperation.readCards();
 				for (int i = 0; i < sizeof(serviceOperation.cards); i++)
 				{
-					cout << "\n\n\t\t "<< serviceOperation.cards[i].id<<"       "<< serviceOperation.loginCustomer.cardId;
-					if (serviceOperation.cards[i].id == serviceOperation.loginCustomer.cardId) {
+					cout << "\n\n\t\t "<< serviceOperation.cards[i].id<<"       "<<clientVector[k].customer.cardId;
+					if (serviceOperation.cards[i].id == clientVector[k].customer.cardId) {
 						
-						cout << "girdim1";
-						card = serviceOperation.cards[i];
-						cout << "girdim2";
-						char* cstr = &card.cardBalance[0];
-						cout << "girdim3";
+						clientVector[k].card = serviceOperation.cards[i];
+						char* cstr = &clientVector[k].card.cardBalance[0];
 						send(clientSocket, cstr, 256, 0);
-						cout << "girdim4";
 						clientVector[k].bakiyeyollandi = true;
-						cout << "girdim5";
 						break;
 						
 					}
@@ -125,8 +109,8 @@ void Connection::ProcessNewMessage(int clientSocket) {
 				//Secim para yatirma ise
 				if (clientVector[k].paraYatirma) {
 					float income = stof(string(buffer));
-					serviceOperation.updateAmount(card, income);
-					char* cstr = &card.cardBalance[0];
+					serviceOperation.updateAmount(clientVector[k].card, income);
+					char* cstr = &clientVector[k].card.cardBalance[0];
 					send(clientSocket, cstr, 256, 0);
 					clientVector[k].paraYatirma = false;
 					clientVector[k].bakiyeyollandi = false;
@@ -136,13 +120,13 @@ void Connection::ProcessNewMessage(int clientSocket) {
 				//Secim para cekme ise
 				else if (clientVector[k].paraCekme) {
 					float income = stof(string(buffer)); 
-					float cardBalance = stof(string(card.cardBalance));
+					float cardBalance = stof(string(clientVector[k].card.cardBalance));
 					if (cardBalance < income) {
 						send(clientSocket, "x", 2, 0);
 					}
 					else {
-						serviceOperation.updateAmount(card, income*(-1));
-						char* cstr = &card.cardBalance[0];
+						serviceOperation.updateAmount(clientVector[k].card, income*(-1));
+						char* cstr = &clientVector[k].card.cardBalance[0];
 						send(clientSocket, cstr, 256, 0);
 						clientVector[k].paraCekme = false;
 						clientVector[k].bakiyeyollandi = false;
@@ -179,9 +163,9 @@ void Connection::ProcessNewMessage(int clientSocket) {
 						
 					}
 					if (clientVector[k].receiveCount2 == 4) {
-						serviceOperation.findCustomerCard(serviceOperation.loginCustomer);
+						serviceOperation.findCustomerCard(clientVector[k].customer);
 						//Ayni banka ise
-						if (serviceOperation.loginCustomer.card.bankid == serviceOperation.receiverCard.bankid) {
+						if (clientVector[k].customer.card.bankid == serviceOperation.receiverCard.bankid) {
 							clientVector[k].receiveCount2++;
 						}
 						//Farkli banka ise
@@ -192,33 +176,33 @@ void Connection::ProcessNewMessage(int clientSocket) {
 					//Ayni Banka transfer islemi
 					else if (clientVector[k].receiveCount2 == 5) {
 						float income = stof(string(buffer));
-						float cardBalance = stof(string(card.cardBalance));
+						float cardBalance = stof(string(clientVector[k].card.cardBalance));
 						if (cardBalance < income) {
 							send(clientSocket, "Y", 2, 0);
 							clientVector[k].receiveCount2 = 0;
 						}
 						else {
-							serviceOperation.updateAmount(card, income * (-1));
+							serviceOperation.updateAmount(clientVector[k].card, income * (-1));
 							serviceOperation.updateAmount(serviceOperation.receiverCard, income);
-							char* cstr = &card.cardBalance[0];
+							char* cstr = &clientVector[k].card.cardBalance[0];
 							send(clientSocket, cstr, 256, 0);
 						}
 					}
 					//Farkli Banka transfer islemi
 					else if (clientVector[k].receiveCount2 == 6) {
 						float income = stof(string(buffer));
-						float cardBalance = stof(string(card.cardBalance));
+						float cardBalance = stof(string(clientVector[k].card.cardBalance));
 						if (cardBalance < income) {
 							send(clientSocket, "Y", 2, 0);
 							clientVector[k].receiveCount2 = 0;
 						}
 						else {
 							serviceOperation.readBanks();
-							serviceOperation.findCardBank(card);
-							int fee = (stof(string(card.bank.fee)) * income)/100;
-							serviceOperation.updateAmount(card, (income + fee) * (-1) );
+							serviceOperation.findCardBank(clientVector[k].card);
+							int fee = (stof(string(clientVector[k].card.bank.fee)) * income)/100;
+							serviceOperation.updateAmount(clientVector[k].card, (income + fee) * (-1) );
 							serviceOperation.updateAmount(serviceOperation.receiverCard, income);
-							char* cstr = &card.cardBalance[0];
+							char* cstr = &clientVector[k].card.cardBalance[0];
 							send(clientSocket, cstr, 256, 0);
 						}
 					}
@@ -237,9 +221,10 @@ void Connection::ProcessTheNewRequest() {
 		if (clientSocket > 0) {
 			//Put it into the client fd_set
 			int index;
+			
 			for (index = 0; index < 5; index++)
 			{
-				if (clients[index] == 0) {
+				if (clients[index] == 0 ) {
 					clients[index] = clientSocket;
 					Client client;
 					client.socket = clientSocket;
@@ -333,7 +318,7 @@ void Connection::selectFunction()
 	int nRet = 0;
 	maxFd = mySocket;
 	struct timeval timevalue;
-	timevalue.tv_sec = 1;
+	timevalue.tv_sec = 10;
 	timevalue.tv_usec = 0;
 	
 

@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+#include "Card.h"
+#include "Customer.h"
 
 using namespace std;
 
@@ -29,6 +31,8 @@ public:
 	string receiverSurname;
 	string receiverCardnumber;
 
+	Card card;
+	Customer customer;
 	Client();
 
 };

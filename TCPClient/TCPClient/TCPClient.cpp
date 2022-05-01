@@ -156,7 +156,7 @@ void initializePage() {
 	cout << "       \t\t\t\tSIFRE : ";
 	cin >> custPassword;
 
-	connection.initializeSocket();
+	
 
 	Sleep(100);
 	send(connection.myClientSocket, custName, 255, 0);
@@ -181,6 +181,7 @@ void initializePage() {
 }
 int main()
 {
+	connection.initializeSocket();
 	initializePage();
 	while (1);
 	return 0;

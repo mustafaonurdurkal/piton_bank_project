@@ -180,13 +180,13 @@ void ServiceOperations::updateAmount(Card &card, float changeBalance)
     
 
 }
-bool ServiceOperations::checkLogin(string name, string surname,string password)
+bool ServiceOperations::checkLogin(string name, string surname,string password,Customer &clientCustomer)
 {
     readCustomers();
     for (int i = 0; i < size(customers); i++)
     {
         if (name == customers[i].customerName && surname == customers[i].customerSurname && password == customers[i].customerPassword) {
-            loginCustomer = customers[i];
+            clientCustomer = customers[i];
             return true;
         }
     }

@@ -51,25 +51,3 @@ void Connection::initializeSocket()
 	}
 }
 
-void Connection::sendMessage(char* message)
-{
-	
-	cout << message;
-	send(myClientSocket, message, 256, 0);
-}
-
-
-
-string Connection::receiveMessage()
-{
-	string str = "";
-	char buffer[255] = { 0 };
-	recv(myClientSocket, buffer, 255, 0);
-	for (int i = 0; i < sizeof(buffer); i++)
-	{
-		str += buffer[i];
-	}
-	return str;
-}
-
-	
