@@ -194,13 +194,13 @@ bool ServiceOperations::checkLogin(string name, string surname,string password,C
 
     return false;
 }
-bool ServiceOperations::checkReceiver(string name, string surname, string cardNumber)
+bool ServiceOperations::checkReceiver(string name, string surname, string cardNumber, Card &clientReceiverCard)
 {
     readCards();
     for (int i = 0; i < size(cards); i++)
     {
         if (name == cards[i].cardCustomerName && surname == cards[i].cardCustomerSurname && cardNumber == cards[i].cardNumber) {
-            receiverCard = cards[i];
+            clientReceiverCard = cards[i];
             return true;
         }
     }
@@ -221,9 +221,11 @@ void ServiceOperations::findCardBank(Card &nCard)
 {
     for (int i = 0; i < sizeof(banks); i++)
     {
-
+        cout << "\ngirdim   " << i;
         if (banks[i].id == nCard.bankid) {
+            cout << "\ngirdim2   " ;
             nCard.bank = banks[i];
+            cout << "\ngirdim3   " << nCard.bank.id<<"\t"<<nCard.bank.fee;
             break;
         }
     }

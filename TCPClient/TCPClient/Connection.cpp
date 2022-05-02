@@ -8,7 +8,6 @@ using namespace std;
 
 #define PORT 9909
 
-
 void Connection::initializeSocket()
 {
 	int nRet = 0;
@@ -21,16 +20,13 @@ void Connection::initializeSocket()
 		WSACleanup();
 		exit(EXIT_FAILURE);
 	}
-	else { cout << endl << "WSA BASLATILDI..."; }
-
+	
 	 myClientSocket = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (myClientSocket < 0) {
 		cout << endl << "Socket acilmadi";
 		WSACleanup();
 		exit(EXIT_FAILURE);
 	}
-	else { cout << endl << "Socket Acildi...\n" << "Socket id= " << myClientSocket << '\n'; }
-
 	//Veri yapisi olusturuluyor
 
 	clientInfo.sin_family = AF_INET;
@@ -44,10 +40,6 @@ void Connection::initializeSocket()
 		cout << "Servera Baglanamadi";
 		WSACleanup();
 		exit(EXIT_FAILURE);
-	}
-	else {
-		cout << endl << myClientSocket;
-
 	}
 }
 

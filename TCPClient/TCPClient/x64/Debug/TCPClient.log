@@ -1,5 +1,3 @@
-﻿  Connection.cpp
-C:\Users\Onur\Desktop\piton\TCPClient\TCPClient\Connection.cpp(26,26): warning C4244: '=': 'SOCKET' - 'int' dönüşümü; veri kaybı olabilir
-  TCPClient.cpp
-  Kod Üretiliyor...
+﻿  TCPClient.cpp
+C:\Users\Onur\Desktop\piton\TCPClient\TCPClient\TCPClient.cpp(166): warning C4717: 'AccountPage' : tüm denetim yollarında özyinelemelidir, işlev çalışma zamanı yığın taşmasına neden olacak
   TCPClient.vcxproj -> C:\Users\Onur\Desktop\piton\TCPClient\x64\Debug\TCPClient.exe

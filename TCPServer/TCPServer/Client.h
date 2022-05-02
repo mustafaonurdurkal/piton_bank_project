@@ -33,6 +33,7 @@ public:
 
 	Card card;
 	Customer customer;
+	Card receiverCard;
 	Client();
 
 };

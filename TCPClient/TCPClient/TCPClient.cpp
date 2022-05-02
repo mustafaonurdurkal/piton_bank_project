@@ -1,5 +1,4 @@
 ﻿// TcpClient.cpp: Uygulamanın giriş noktasını tanımlar.
-//
 #pragma warning(disable : 4996)
 #include "TcpClient.h"
 #include <iostream>
@@ -10,7 +9,6 @@
 using namespace std;
 
 #define PORT 9909
-
 
 struct sockaddr_in clientInfo;
 Connection connection;
@@ -27,31 +25,48 @@ void BakiyeYatir() {
 	system("cls");
 	cout << "\t\t\t\n\nLutfen Yatirmak istenen tutari giriniz : ";
 	cin >> bakiye;
-	Sleep(100);
-	send(connection.myClientSocket, bakiye, 255, 0);
-	Sleep(100);
-	recv(connection.myClientSocket, buffer, 256, 0);
-	cout << "\t\t\t\nGuncel Bakiyeniz : " << buffer <<"\n\t\t\tAna menuye donuluyor...";
-	Sleep(2000);
+	try {
+
+		if (stof(string(bakiye)) > 0) {
+			Sleep(100);
+			send(connection.myClientSocket, bakiye, 255, 0);
+			Sleep(100);
+			recv(connection.myClientSocket, buffer, 256, 0);
+			cout << "\t\t\t\nGuncel Bakiyeniz : " << buffer << "\n\t\t\tAna menuye donuluyor...";
+			Sleep(2000);
+		}
+	}catch (std::invalid_argument e) {
+		cout << "Hatali giris yaptiniz...Lutfen Pozitif Bir SayI Giriniz...";
+		Sleep(1500);
+		BakiyeYatir();
+	}
 }
 void BakiyeCek() {
 	system("cls");
 	cout << "\t\t\t\n\nLutfen Para cekmek istenen tutari giriniz : ";
 	cin >> bakiye;
-	Sleep(100);
-	send(connection.myClientSocket, bakiye, 255, 0);
-	Sleep(100);
-	recv(connection.myClientSocket, buffer, 256, 0);
-	if (buffer[0] == 'x') {
-		//Yetersiz Bakiye
-		cout << "\n\t\t\tBakiyeniz Yetersiz Lutfen Tekrar Deneyiniz";
-		Sleep(1000);
+	try {
+		if (stof(string(bakiye)) > 0) {
+			Sleep(100);
+			send(connection.myClientSocket, bakiye, 255, 0);
+			Sleep(100);
+			recv(connection.myClientSocket, buffer, 256, 0);
+			if (buffer[0] == 'x') {
+				//Yetersiz Bakiye
+				cout << "\n\t\t\tBakiyeniz Yetersiz Lutfen Tekrar Deneyiniz";
+				Sleep(1000);
+			}
+			else {
+				cout << "\t\t\t\nGuncel Bakiyeniz : " << buffer << "\nAnamenuye donuluyor.";
+				Sleep(2000);
+			}
+		}	
+	}catch(std::invalid_argument e) {
+		cout << "Hatali giris yaptiniz...Lutfen Pozitif Bir SayI Giriniz...";
+		Sleep(1500);
 		BakiyeCek();
 	}
-	else {
-		cout << "\t\t\t\nGuncel Bakiyeniz : " << buffer<<"\nAnamenuye donuluyor.";
-		Sleep(2000);
-	}
+	
 	
 }
 void HavaleYap () {
@@ -86,7 +101,7 @@ void HavaleYap () {
 		cin >> bakiye;
 		send(connection.myClientSocket, bakiye, 255, 0);
 		Sleep(100);
-		recv(connection.myClientSocket, buffer, 255, 0);
+		recv(connection.myClientSocket, buffer, 256, 0);
 		Sleep(100);
 
 		if (buffer[0] == 'Y') {
@@ -110,7 +125,6 @@ void AccountPage() {
 	Sleep(100);
 	recv(connection.myClientSocket, buffer, 256, 0);
 	Sleep(100);
-
 
 	cout << "\t\t\t\t\t\t Kalan Bakiyeniz :" << buffer  <<"TL\n\n\n";
 	cout << "\t\t\tLutfen Yapmak istediginiz islemi Seciniz\n\n";
@@ -137,10 +151,16 @@ void AccountPage() {
 		// Havale yap
 		send(connection.myClientSocket, "t", 2, 0);
 		HavaleYap();
+		AccountPage();
 
 		break;
 	default:
 		// hatali giris tekrar secim ekranina yonlendir
+		send(connection.myClientSocket, "Beni Pitonda ise Alin :))", 26, 0);
+		cout << "\n\t\t\t\t\t\t\t\n\n HATALI GIRIS YAPTINIZ TEKRAR DENEMEK UZERE YONLENDIRILIYORSUNUZ...";
+		Sleep(1500);
+		send(connection.myClientSocket, "Kullanici Hatali Giris Yapti", 26, 0);
+		AccountPage();
 		break;
 	}
 }
@@ -156,8 +176,6 @@ void initializePage() {
 	cout << "       \t\t\t\tSIFRE : ";
 	cin >> custPassword;
 
-	
-
 	Sleep(100);
 	send(connection.myClientSocket, custName, 255, 0);
 	Sleep(100);
@@ -169,21 +187,21 @@ void initializePage() {
 	Sleep(100);
 
 	if (buffer[0] == '0') {
-		//Yeni Sayfaya yonlendir giris  yapildi
+		//Sayfayi yenile yeniden giris bilgilerini cagir
+		cout << "\t\t\t\t\t\t\t\n\n HATALI GIRIS YAPTINIZ TEKRAR DENEMEK UZERE YONLENDIRILIYORSUNUZ...";
+		Sleep(1500);
 		system("cls");
 		initializePage();
 	}
 	else {
-		//Sayfayi yenile yeniden giris bilgilerini cagir
+		//Yeni Sayfaya yonlendir giris  yapildi
 		AccountPage();
 	}
-
 }
 int main()
 {
 	connection.initializeSocket();
 	initializePage();
-	while (1);
 	return 0;
 }
 
