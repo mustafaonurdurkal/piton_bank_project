@@ -16,10 +16,18 @@ Proje Açıklaması <br/>
       Bunlardan bir tanesi her client ve server arasındaki network için bir thread tanımlamak ve serverın her client ile ayrı ayrı ama eşzamanlı konuşabilmesini sağlar<br/><br/>
       İkinci yol ise select() fonksiyonu aracılığı ile read/write/exception isimli 3 adet kernel dosyasi olusturup,bu dosyalarda server ve clientin socket bilgisini tutarız ve  bu dosyalara dosya tanımlayıcı değişkenlerle (fd_set) ulaşıp surekli olarak bu dosyalarda değişiklik olup olmadığını kontrol ederiz. Bir değişiklik varsa anlarız ki o clienttan bir istek gelmiş. Bu sayede server tum clientlarla ayrı ayrı konuşma yapmak yerine hepsini aynı anda dinler ve hangisi konuşuyorsa ona yanıt verir.<br/><br/>
       İlk yol programlama tarafında programcıya avantaj sağlar çünkü tek bir konuşma fonksiyonu yazıp tüm threadlerde bu fonksiyonu çağırabiliriz.Fakat dezavantajı şudur ki: Çok sayıda thread açmak işlemciye yüklenmek demektir.Bir banka uygulamasında çok sayıda client olacağı için biz bu projede ikinci yöntem olan select() fonksiyonunu kullandık.Bu yüzden server tarafında biraz logic karmaşıklığı istemeden oluştu. (Tabi bu karmaşa düzenlenerek azaltılabilir.)<br/><br/>
+         Bu baglantılar düzgün bir şekilde sağlandıktan sonra receive ve send fonksiyonları ile server ve client arası senkronizasyon logic kontrolleri ile sağlanıyor.Gerekli exception hata kontrolleri yapılıyor.Veriler server tarafında 3 adet txt dosyası tarafından tutuluyor.Bu dosyalar card.txt bank.txt ve customer.txt
+Yapılan testlerde uygulama sorunsuz bir şekilde çalışıyor. Video ektedir.
       
-      Bu baglantılar düzgün bir şekilde sağlandıktan sonra receive ve send fonksiyonları ile server ve client arası senkronizasyon logic kontrolleri ile sağlanıyor.Gerekli exception hata kontrolleri yapılıyor.Veriler server tarafında 3 adet txt dosyası tarafından tutuluyor.Bu dosyalar card.txt bankçtxt ve customer.txt
-Yapılan testlerde uygulama sorunsuz bir şekilde çalışıyor.
+ 
       
+      
+https://user-images.githubusercontent.com/32611163/166325691-602f369e-41cd-485a-be62-9c71af470fc9.mp4
+
+Gelecekteki Yapılabilecek Geliştirmeler:<br/><br/>
+  Parola serverda hash fonksiyonu ile kriptolanıp tutulacak. Client parola bilgisini girdiğinde, client tarafında parola hashlanip servera yollanacak bu sayede iletilen veride güvenlik sağlanacak server tarafında hash fonksiyonundaki parola ile kıyaslanıp verify bilgisi yollanacak.
+  Üçüncü bir client uygulaması yapılacak bu uygulama banka çalışanlarına hitap edecek, ve yeni kullanıcı ve card oluşturabilecekler ayrıca kullanıcının card numarasını ve son kullanım tarihi card güvenlik kodunu kısmi olarak yapabilecek.
+  Arayüz QT ortamına taşınıp USER friendly bir uygulama haline gelecek...
 
  
   
